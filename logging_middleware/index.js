@@ -15,3 +15,5 @@ const sendLog = async (level, packageName, message) => {
         body: JSON.stringify(data)
     });
 };
+
+module.exports = {sendLog};

@@ -33,3 +33,23 @@ function maxImpact(hours, vehicles){
     }
 }
 
+async function scheduleDepots(){
+    const headers = {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${TOKEN}`
+    };
+    const dRes = await fetch(`${SERVER_URL}/depots`, {headers});
+    const dData = await dRes.json();
+    const d = dData.depots;
+    const vRes = await fetch(`${SERVER_URL}/vehicles`, {headers});
+    const vData = await vRes.json();
+    const v = vData.vehicles;
+
+    for (const depot of d){
+        const r = maxImpact(depot.MechanicHours, v);
+        const msg = `Depot ${depot.ID}: Max Impact = ${r.maxImpact}, Scheduled Tasks = [${r.selectedIDs.join(", ")}]`;
+        await sendLog("info", "scheduler", msg);
+    }
+}
+
+module.exports = {scheduleDepots};
