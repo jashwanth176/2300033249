@@ -119,3 +119,6 @@ Fetching the notifications from the database everytime is time consuming and wil
 
 Instead of polling for new notifications we can set up a websocket which will maintain a persistent conncetions to the client and update the notifications in real time.
 
+**Stage 5**
+
+Its synchronus and blocking loop. 50k students in a for loop will take a very long time, and can take hours to send emails to everyone and loop might crash and cause for some students not getting importent alerts. We need to decouple the slow operations from fast operations . We should use something like a message queue to ensure everyone got the email properly, 
